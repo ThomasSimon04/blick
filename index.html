@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#EDEEF0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1013" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Blick</title>
+<style>
+:root{
+  --paper:#ffffff;
+  --bg:#EDEEF0;
+  --ink:#16181D;
+  --ink-2:#3E434B;
+  --muted:#8B9099;
+  --hair:rgba(22,24,29,.08);
+  --hair-2:rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(16,18,23,.04), 0 8px 24px -12px rgba(16,18,23,.18);
+  --shadow-lg:0 24px 60px -20px rgba(16,18,23,.35);
+  --c-person:#C4736E;
+  --c-birthday:#C09047;
+  --c-trip:#5C8A86;
+  --c-food:#7A6FA4;
+  --c-work:#79818C;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --stage-1:#DFE1E5;
+  --stage-2:#C9CDD3;
+}
+.dark{
+  --paper:#191B20;
+  --bg:#0F1013;
+  --ink:#ECEDEF;
+  --ink-2:#B9BDC4;
+  --muted:#7C828C;
+  --hair:rgba(255,255,255,.10);
+  --hair-2:rgba(255,255,255,.06);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  --shadow-lg:0 24px 60px -20px rgba(0,0,0,.8);
+  --c-person:#D0857F;
+  --c-birthday:#D2A257;
+  --c-trip:#6C9E99;
+  --c-food:#8E82BB;
+  --c-work:#8A929D;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Inter","SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  background:radial-gradient(120% 90% at 50% 0%, var(--stage-1) 0%, var(--stage-2) 100%);
+  color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:22px;padding:28px 16px;min-height:100%;
+  transition:background .5s var(--ease);
+}
+body.stage-dark{--stage-1:#26282D;--stage-2:#141518}
+
+/* ---------- Gerät ---------- */
+.phone{
+  position:relative;width:390px;height:844px;flex:0 0 auto;
+  border-radius:54px;padding:11px;
+  background:linear-gradient(160deg,#3a3d43,#111316 40%,#26292e);
+  box-shadow:var(--shadow-lg),0 0 0 1px rgba(0,0,0,.4);
+}
+.screen{
+  position:relative;width:100%;height:100%;border-radius:44px;overflow:hidden;
+  background:var(--bg);color:var(--ink);
+  transition:background .4s var(--ease),color .4s var(--ease);
+  display:flex;flex-direction:column;
+}
+.notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:112px;height:30px;border-radius:18px;background:#0b0c0e;z-index:40}
+.statusbar{
+  position:relative;z-index:30;height:52px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 30px 0;font-size:14px;font-weight:600;letter-spacing:.01em;
+  font-variant-numeric:tabular-nums;
+}
+.statusbar .icons{display:flex;align-items:center;gap:5px;opacity:.9}
+.scroll{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:6px 0 128px;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+
+/* ---------- Typografie / Bausteine ---------- */
+.eyebrow{
+  font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.sec{padding:0 22px;margin-bottom:26px;animation:rise .5s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--paper);border-radius:24px;box-shadow:var(--shadow);
+  transition:transform .35s var(--ease),background .4s var(--ease);
+}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:12px}
+.press{transition:transform .18s var(--ease),opacity .18s var(--ease)}
+.press:active{transform:scale(.975);opacity:.85}
+
+/* ---------- Kopf ---------- */
+.head{padding:14px 22px 20px;animation:rise .5s var(--ease) both}
+.head-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.greet{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:9px}
+.date{font-size:31px;line-height:1.08;font-weight:300;letter-spacing:-.025em}
+.date b{font-weight:600}
+.wx{display:flex;flex-direction:column;align-items:flex-end;gap:3px;padding-top:22px}
+.wx-temp{display:flex;align-items:center;gap:7px;font-size:22px;font-weight:400;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.wx-sub{font-size:11.5px;color:var(--muted);letter-spacing:.01em}
+.iconbtn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2);background:var(--hair-2)}
+
+/* ---------- Signatur: Tagesbogen ---------- */
+.arc{margin-top:22px;position:relative;height:58px}
+.arc svg{width:100%;height:58px;overflow:visible;display:block}
+.arc-lab{position:absolute;top:44px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.arc-now{position:absolute;top:-2px;transform:translateX(-50%);font-size:10px;font-weight:600;color:var(--ink);letter-spacing:.04em;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- Für dich ---------- */
+.group{margin-bottom:20px}
+.group:last-child{margin-bottom:0}
+.group-lab{display:flex;align-items:baseline;gap:8px;margin:0 4px 10px}
+.row{
+  display:flex;align-items:flex-start;gap:13px;padding:15px 17px;
+  border-bottom:1px solid var(--hair-2);
+}
+.row:last-child{border-bottom:0}
+.row-body{flex:1;min-width:0}
+.row-title{font-size:15.5px;letter-spacing:-.012em;line-height:1.32}
+.row-note{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+.row-meta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px;white-space:nowrap}
+.box{
+  width:21px;height:21px;border-radius:7px;border:1.5px solid var(--hair);
+  flex:0 0 auto;margin-top:1px;display:grid;place-items:center;color:transparent;
+  transition:all .25s var(--ease);
+}
+.box.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.done .row-title{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;margin-top:7px}
+.tag{width:3px;border-radius:2px;align-self:stretch;flex:0 0 auto}
+
+/* Hero-Karte kurz vor einem Termin */
+.hero{padding:20px 20px 18px;border-radius:24px;background:var(--paper);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--c-person)}
+.hero-t{font-size:21px;font-weight:400;letter-spacing:-.022em;margin:9px 0 2px}
+.hero-time{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hero-open{margin-top:15px;padding-top:14px;border-top:1px solid var(--hair-2);display:flex;align-items:center;gap:11px}
+
+/* ---------- Kalender ---------- */
+.cal{padding:16px 14px 14px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;padding:0 6px 12px}
+.cal-month{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.cal-nav{display:flex;gap:2px}
+.cal-nav button{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2)}
+.cal-nav button:hover{background:var(--hair-2)}
+.wd{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
+.wd span{text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:1px}
+.day{position:relative;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);border-radius:12px;transition:background .2s var(--ease)}
+.day.mute{color:var(--muted);opacity:.42}
+.day .n{position:relative;z-index:2;width:27px;height:27px;display:grid;place-items:center;border-radius:50%;transition:all .3s var(--ease)}
+.day.today .n{background:var(--ink);color:var(--paper);font-weight:600}
+.day.sel .n{box-shadow:0 0 0 1.5px var(--ink)}
+.day.today.sel .n{box-shadow:0 0 0 1.5px var(--ink),0 0 0 4px var(--bg)}
+.dots{display:flex;gap:3px;height:5px;align-items:center;position:relative;z-index:2}
+.dots i{width:5px;height:5px;border-radius:50%;display:block}
+.range{position:absolute;top:8px;bottom:8px;left:0;right:0;background:color-mix(in srgb,var(--c-trip) 15%,transparent);z-index:1}
+.range.s{left:4px;border-radius:11px 0 0 11px}
+.range.e{right:4px;border-radius:0 11px 11px 0}
+.cal-foot{margin-top:10px;padding:11px 8px 2px;border-top:1px solid var(--hair-2);display:flex;align-items:center;gap:11px;font-size:12.5px;color:var(--muted)}
+
+/* ---------- kompakte Karten ---------- */
+.mini{display:flex;align-items:center;gap:14px;padding:17px 18px;width:100%;text-align:left}
+.mini-ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--hair-2);color:var(--ink-2);flex:0 0 auto}
+.mini-t{font-size:14.5px;letter-spacing:-.01em}
+.mini-s{font-size:12px;color:var(--muted);margin-top:3px}
+.fin{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 20px 17px;width:100%;text-align:left;gap:12px}
+.fin-big{font-size:29px;font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+.fin-col{text-align:right}
+.fin-v{font-size:14px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.pos{color:var(--c-trip)}
+.player{display:flex;align-items:center;gap:14px;padding:13px 15px}
+.art{width:48px;height:48px;border-radius:12px;flex:0 0 auto;background:linear-gradient(140deg,#2A2C33,#6E5140 55%,#C9A227);position:relative;overflow:hidden}
+.art:after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 30% 25%,rgba(255,255,255,.35),transparent 70%)}
+.pbar{height:2px;border-radius:2px;background:var(--hair);margin-top:8px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--ink-2);transition:width .9s linear}
+.pbtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;color:var(--ink)}
+.timercard{display:flex;align-items:center;gap:16px;padding:16px 18px;width:100%;text-align:left}
+.tnum{font-size:30px;font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+
+/* ---------- Action-Bar ---------- */
+.bar{
+  position:absolute;left:50%;transform:translateX(-50%);bottom:26px;z-index:35;
+  display:flex;align-items:center;gap:4px;padding:7px;border-radius:26px;
+  background:color-mix(in srgb,var(--paper) 78%,transparent);
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 1px 1px rgba(16,18,23,.05),0 14px 34px -14px rgba(16,18,23,.45);
+  border:1px solid var(--hair-2);
+}
+.bar button{width:56px;height:44px;border-radius:20px;display:grid;place-items:center;color:var(--ink-2);position:relative}
+.bar button:hover{background:var(--hair-2)}
+.bar .primary{color:var(--paper);background:var(--ink)}
+.bar .primary:hover{background:var(--ink)}
+.bar .live:after{content:"";position:absolute;top:8px;right:13px;width:5px;height:5px;border-radius:50%;background:var(--c-person)}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:var(--ink);opacity:.28;z-index:36}
+
+/* ---------- Sheets ---------- */
+.scrim{position:absolute;inset:0;background:rgba(10,11,13,.34);opacity:0;pointer-events:none;transition:opacity .38s var(--ease);z-index:44;backdrop-filter:blur(1.5px)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;z-index:45;max-height:78%;
+  background:var(--paper);border-radius:30px 30px 44px 44px;
+  transform:translateY(102%);transition:transform .42s var(--ease);
+  box-shadow:0 -18px 50px -20px rgba(0,0,0,.35);
+  display:flex;flex-direction:column;
+}
+.sheet.on{transform:translateY(0)}
+.grab{width:38px;height:4px;border-radius:2px;background:var(--hair);margin:9px auto 0;flex:0 0 auto}
+.sheet-body{padding:14px 24px 40px;overflow-y:auto;scrollbar-width:none}
+.sheet-body::-webkit-scrollbar{display:none}
+.sheet-title{font-size:20px;font-weight:500;letter-spacing:-.022em;margin:6px 0 3px}
+.sheet-sub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+.opt{display:flex;align-items:center;gap:14px;padding:16px 4px;border-bottom:1px solid var(--hair-2);width:100%;text-align:left}
+.opt:last-of-type{border-bottom:0}
+.field{
+  width:100%;background:var(--hair-2);border:1px solid transparent;border-radius:16px;
+  padding:15px 16px;font-size:16px;color:var(--ink);letter-spacing:-.01em;outline:none;
+  transition:border-color .25s var(--ease);font-family:inherit;
+}
+.field::placeholder{color:var(--muted)}
+.field:focus{border-color:var(--hair)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+.chip{padding:9px 14px;border-radius:14px;background:var(--hair-2);font-size:13px;color:var(--ink-2);letter-spacing:-.005em}
+.chip.on{background:var(--ink);color:var(--paper)}
+.cta{width:100%;margin-top:20px;padding:16px;border-radius:18px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:500;letter-spacing:-.01em}
+.cta[disabled]{opacity:.35;cursor:not-allowed}
+.ghost{width:100%;margin-top:10px;padding:14px;border-radius:18px;font-size:14px;color:var(--muted)}
+.list-item{display:flex;gap:13px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--hair-2)}
+.list-item:last-child{border-bottom:0}
+.empty{padding:26px 0 8px;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.5}
+.ringwrap{display:grid;place-items:center;padding:12px 0 6px;position:relative}
+.ringwrap .t{position:absolute;font-size:42px;font-weight:200;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.tctl{display:flex;gap:10px;margin-top:18px}
+.tctl button{flex:1;padding:15px;border-radius:18px;background:var(--hair-2);font-size:14.5px;letter-spacing:-.01em}
+.tctl button.fill{background:var(--ink);color:var(--paper)}
+.bars{display:flex;flex-direction:column;gap:11px;margin-top:6px}
+.brow{display:flex;align-items:center;gap:12px;font-size:13px}
+.brow .bar-t{flex:1;height:5px;border-radius:3px;background:var(--hair-2);overflow:hidden}
+.brow .bar-t i{display:block;height:100%;background:var(--ink-2);border-radius:3px}
+.brow .v{width:56px;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.hrow{display:flex;justify-content:space-between;gap:6px;margin-top:4px}
+.hcell{flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hcell b{display:block;font-size:13px;color:var(--ink);font-weight:500;margin-top:7px}
+.res{padding:14px 0;border-bottom:1px solid var(--hair-2)}
+.res .u{font-size:11.5px;color:var(--muted)}
+.res .h{font-size:15px;color:var(--ink);margin-top:3px;letter-spacing:-.01em}
+.toast{
+  position:absolute;left:50%;bottom:96px;transform:translate(-50%,14px);z-index:60;
+  background:var(--ink);color:var(--paper);font-size:13px;padding:11px 18px;border-radius:16px;
+  opacity:0;pointer-events:none;transition:all .32s var(--ease);letter-spacing:-.01em;white-space:nowrap;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Demo-Steuerung außerhalb des Geräts ---------- */
+.demo{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;max-width:520px}
+.demo .lab{width:100%;text-align:center;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(22,24,29,.42);margin-bottom:2px}
+body.stage-dark .demo .lab{color:rgba(255,255,255,.4)}
+.demo button{
+  padding:8px 14px;border-radius:13px;font-size:12.5px;color:#16181D;
+  background:rgba(255,255,255,.6);border:1px solid rgba(22,24,29,.07);
+}
+body.stage-dark .demo button{background:rgba(255,255,255,.08);color:#E6E7EA;border-color:rgba(255,255,255,.09)}
+.demo button.on{background:#16181D;color:#fff;border-color:#16181D}
+body.stage-dark .demo button.on{background:#fff;color:#16181D}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== Auf dem Handy: kein Rahmen, echtes Vollbild ===== */
+@media (display-mode:standalone),(max-width:560px){
+  body{padding:0;gap:0;background:var(--bg);display:block}
+  body.stage-dark{background:var(--bg)}
+  .phone{width:100vw;height:100dvh;border-radius:0;padding:0;background:none;box-shadow:none;transform:none!important;margin:0!important}
+  .screen{border-radius:0;height:100dvh}
+  .notch{display:none}
+  .statusbar{display:none}
+  .scroll{padding-top:calc(env(safe-area-inset-top) + 14px)}
+  .bar{bottom:calc(env(safe-area-inset-bottom) + 16px)}
+  .homebar{display:none}
+  .sheet{border-radius:30px 30px 0 0;padding-bottom:env(safe-area-inset-bottom)}
+  .demo{display:none}
+}
+@media (max-width:430px),(max-height:900px){
+  body{padding:12px 8px}
+  .phone{transform:scale(var(--s,1));transform-origin:top center}
+}
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone">
+  <div class="notch"></div>
+  <div class="screen" id="screen">
+    <div class="statusbar">
+      <span id="sbTime">9:41</span>
+      <span class="icons">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 4.2a10 10 0 0 1 14 0"/><path d="M3.6 7a6.4 6.4 0 0 1 8.8 0"/><circle cx="8" cy="10" r="1.1" fill="currentColor" stroke="none"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".8" y=".8" width="20" height="10.4" rx="3.2" stroke="currentColor" stroke-opacity=".4" stroke-width="1"/><rect x="2.6" y="2.6" width="14" height="6.8" rx="1.8" fill="currentColor"/><path d="M22.6 4.2v3.6a2 2 0 0 0 0-3.6Z" fill="currentColor" fill-opacity=".45"/></svg>
+      </span>
+    </div>
+
+    <div class="scroll" id="scroll">
+      <div class="head" id="head"></div>
+      <div id="stack"></div>
+    </div>
+
+    <nav class="bar">
+      <button class="primary press" id="bAdd" aria-label="Hinzufügen"></button>
+      <button class="press" id="bChat" aria-label="WhatsApp"></button>
+      <button class="press" id="bCam" aria-label="Kamera"></button>
+      <button class="press" id="bSearch" aria-label="Suchen"></button>
+    </nav>
+    <div class="homebar"></div>
+
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true">
+      <div class="grab"></div>
+      <div class="sheet-body" id="sheetBody"></div>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+
+<div class="demo" id="demo">
+  <span class="lab">Demo-Kontext — so verändert sich der Screen</span>
+</div>
+
+<script>
+/* ========== Icons ========== */
+const I = (p,s=1.7,vb="0 0 24 24") => `<svg width="20" height="20" viewBox="${vb}" fill="none" stroke="currentColor" stroke-width="${s}" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ic = {
+  plus:  I('<path d="M12 5v14M5 12h14"/>'),
+  timer: I('<circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2.2 1.6M9.5 2h5"/>'),
+  play:  '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2c0-.9 1-1.5 1.8-1l9 6.8c.7.5.7 1.5 0 2l-9 6.8c-.8.5-1.8-.1-1.8-1V5.2Z"/></svg>',
+  pause: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.4"/><rect x="13.5" y="5" width="4" height="14" rx="1.4"/></svg>',
+  prev:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.5 6.2v11.6c0 .9-1 1.4-1.7.9l-8-5.8a1.1 1.1 0 0 1 0-1.8l8-5.8c.7-.5 1.7 0 1.7.9Z"/><rect x="4" y="5" width="2.4" height="14" rx="1.2"/></svg>',
+  next:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5.5 6.2v11.6c0 .9 1 1.4 1.7.9l8-5.8a1.1 1.1 0 0 0 0-1.8l-8-5.8c-.7-.5-1.7 0-1.7.9Z"/><rect x="17.6" y="5" width="2.4" height="14" rx="1.2"/></svg>',
+  search:I('<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>'),
+  moon:  I('<path d="M20 14.5A8.2 8.2 0 0 1 9.6 4 8.5 8.5 0 1 0 20 14.5Z"/>'),
+  sun:   I('<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/>'),
+  wsun:  I('<circle cx="12" cy="12" r="4.4"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12H5M19 12h2.2M5.6 5.6 7.2 7.2M16.8 16.8l1.6 1.6M18.4 5.6 16.8 7.2M7.2 16.8l-1.6 1.6"/>',1.5),
+  wrain: I('<path d="M17.5 17.5a4.5 4.5 0 0 0-.6-9 6 6 0 0 0-11.4 2.2A3.9 3.9 0 0 0 6 17.5"/><path d="M9 20.5l.8-1.6M13 21l.8-1.6M16.5 20.5l.8-1.6"/>',1.5),
+  mail:  I('<rect x="2.8" y="5" width="18.4" height="14" rx="3"/><path d="m3.5 7.5 7.4 5.2c.7.5 1.5.5 2.2 0l7.4-5.2"/>'),
+  euro:  I('<path d="M17.5 6.2A6.5 6.5 0 0 0 8 8.5M17.5 17.8A6.5 6.5 0 0 1 8 15.5M4.5 10.5h8M4.5 13.5h8"/>'),
+  chevL: I('<path d="M14.5 5.5 8 12l6.5 6.5"/>',1.8),
+  chevR: I('<path d="M9.5 5.5 16 12l-6.5 6.5"/>',1.8),
+  chevRs:I('<path d="M9.5 5.5 16 12l-6.5 6.5"/>',1.6),
+  check: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.8 9.5 18 19.5 6.5"/></svg>',
+  cal:   I('<rect x="3.2" y="5" width="17.6" height="16" rx="3.4"/><path d="M3.2 10h17.6M8 2.8v3.6M16 2.8v3.6"/>'),
+  bulb:  I('<path d="M9 17.5h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6h5.4c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/>'),
+  chat:  I('<path d="M20.6 11.6a8.4 8.4 0 0 1-11.9 7.6L3.4 20.6l1.4-5.2a8.4 8.4 0 1 1 15.8-3.8Z"/>'),
+  cam:   I('<path d="M3 8.6A2.6 2.6 0 0 1 5.6 6h1.7l1.2-2.1h6l1.2 2.1h1.7A2.6 2.6 0 0 1 20 8.6v9.8A2.6 2.6 0 0 1 17.4 21H5.6A2.6 2.6 0 0 1 3 18.4Z"/><circle cx="11.5" cy="13" r="3.6"/>',1.5),
+  close: I('<path d="M6 6l12 12M18 6 6 18"/>'),
+  x:     I('<path d="M6 6l12 12M18 6 6 18"/>',1.6)
+};
+
+/* ========== Zustand ========== */
+const CAT = { person:'--c-person', birthday:'--c-birthday', trip:'--c-trip', food:'--c-food', work:'--c-work' };
+const S = {
+  theme:'light',
+  ctx:'live',
+  view:{y:2026,m:7},
+  sel:null,
+  events:[
+    {id:'e1', d:'2026-08-12', t:'08:30', title:'Arbeit', cat:'work'},
+    {id:'e2', d:'2026-08-13', t:'08:30', title:'Arbeit', cat:'work'},
+    {id:'e3', d:'2026-08-14', t:'19:00', title:'Freundin treffen', cat:'person', link:'t1'},
+    {id:'e4', d:'2026-08-16', t:null,   title:'Geburtstag Max', cat:'birthday'},
+    {id:'e5', d:'2026-08-19', to:'2026-08-23', t:null, title:'Urlaub', cat:'trip'},
+    {id:'e6', d:'2026-08-27', t:'19:30', title:'Essen gehen', cat:'food'},
+    {id:'e7', d:'2026-08-17', t:'08:30', title:'Arbeit', cat:'work'},
+    {id:'e8', d:'2026-09-02', t:'14:00', title:'Zahnarzt', cat:'work'}
+  ],
+  tasks:[
+    {id:'t1', title:'Blumen für Freundin kaufen', d:'2026-08-11', done:false},
+    {id:'t2', title:'Paket wegbringen', d:'2026-08-11', done:false},
+    {id:'t3', title:'Druckerpatronen bestellen', d:'2026-08-13', done:false}
+  ],
+  notes:[
+    {id:'n1', title:'Spülmaschinentabs kaufen'},
+    {id:'n2', title:'Max wegen Samstag fragen'}
+  ],
+  timer:{running:false, left:0, total:0},
+  music:{playing:false, pos:82, len:248},
+  mailRead:false,
+  chatUnread:2
+};
+
+const CTX = {
+  live:   {label:'Jetzt'},
+  morgen: {label:'Morgens', time:'07:42', day:11},
+  abend:  {label:'Vor dem Termin', time:'17:05', day:14},
+  kochen: {label:'Timer läuft', time:'18:26', day:11, timer:512}
+};
+
+/* ========== Helfer ========== */
+const $  = s => document.querySelector(s);
+const pad = n => String(n).padStart(2,'0');
+const iso = (y,m,d) => `${y}-${pad(m+1)}-${pad(d)}`;
+const WD  = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const WDL = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const MO  = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const c = k => `var(${CAT[k]})`;
+
+function simNow(){
+  const cx = CTX[S.ctx];
+  if(S.ctx==='live'){
+    const n = new Date();
+    return {y:2026, m:7, d:11, h:n.getHours(), min:n.getMinutes()};
+  }
+  const [h,min] = cx.time.split(':').map(Number);
+  return {y:2026, m:7, d:cx.day, h, min};
+}
+const todayISO = () => { const n = simNow(); return iso(n.y,n.m,n.d); };
+function fmtClock(){ const n = simNow(); return `${n.h}:${pad(n.min)}`; }
+function mmss(s){ return `${Math.floor(s/60)}:${pad(s%60)}`; }
+function daysBetween(a,b){ return Math.round((new Date(b)-new Date(a))/864e5); }
+
+function eventsOn(dstr){
+  return S.events.filter(e => e.to ? (dstr>=e.d && dstr<=e.to) : e.d===dstr);
+}
+function relLabel(n){
+  if(n===0) return 'Heute';
+  if(n===1) return 'Morgen';
+  if(n===2) return 'Übermorgen';
+  if(n<0)   return 'Vergangen';
+  return `In ${n} Tagen`;
+}
+
+/* ========== Kopfbereich mit Tagesbogen ========== */
+function greeting(h){
+  if(h<11) return 'Guten Morgen';
+  if(h<17) return 'Dein Tag';
+  if(h<22) return 'Guten Abend';
+  return 'Späte Stunde';
+}
+function renderHead(){
+  const n = simNow();
+  const dow = new Date(n.y,n.m,n.d).getDay();
+  const wx  = n.h>=17 ? {t:16, s:'Regen', icon:ic.wrain, sub:'Regen bis 20:00'} : {t:18, s:'Sonnig', icon:ic.wsun, sub:'Regen ab 17:00'};
+
+  // Tagesbogen: 6:00 – 23:00
+  const start=6, end=23, W=346;
+  const posOf = hh => Math.max(0,Math.min(1,(hh-start)/(end-start)));
+  const nowP  = posOf(n.h + n.min/60);
+  const px    = p => 6 + p*(W-12);
+  const py    = p => 40 - Math.sin(p*Math.PI)*26;
+
+  const marks = eventsOn(todayISO()).filter(e=>e.t).map(e=>{
+    const hh = Number(e.t.split(':')[0]) + Number(e.t.split(':')[1])/60;
+    const p  = posOf(hh);
+    return `<circle cx="${px(p).toFixed(1)}" cy="${py(p).toFixed(1)}" r="4.5" fill="${c(e.cat)}"/>`;
+  }).join('');
+
+  let arcPath = '';
+  for(let i=0;i<=40;i++){ const p=i/40; arcPath += (i?'L':'M') + px(p).toFixed(1) + ' ' + py(p).toFixed(1); }
+
+  $('#head').innerHTML = `
+    <div class="head-top">
+      <div>
+        <div class="greet">${greeting(n.h)}</div>
+        <div class="date">${WDL[dow]},<br><b>${n.d}. ${MO[n.m]}</b></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:14px">
+        <button class="iconbtn press" id="tTheme" aria-label="Dark Mode umschalten">${S.theme==='light'?ic.moon:ic.sun}</button>
+        <button class="wx press" id="tWx" style="padding-top:0" aria-label="Wetter">
+          <span class="wx-temp">${wx.icon}${wx.t}°</span>
+          <span class="wx-sub">${wx.s} · ${wx.sub}</span>
+        </button>
+      </div>
+    </div>
+    <div class="arc">
+      <svg viewBox="0 0 ${W} 58" preserveAspectRatio="none">
+        <path d="${arcPath}" stroke="var(--hair)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="${arcPath}" stroke="var(--ink)" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-dasharray="1000" stroke-dashoffset="${(1000-nowP*470).toFixed(0)}" opacity=".55"/>
+        ${marks}
+        <circle cx="${px(nowP).toFixed(1)}" cy="${py(nowP).toFixed(1)}" r="6.5" fill="var(--bg)"/>
+        <circle cx="${px(nowP).toFixed(1)}" cy="${py(nowP).toFixed(1)}" r="3.6" fill="var(--ink)"/>
+      </svg>
+      <span class="arc-lab" style="left:2px">6 Uhr</span>
+      <span class="arc-lab" style="right:2px">23 Uhr</span>
+      <span class="arc-now" style="left:${((px(nowP)/W)*100).toFixed(1)}%">${fmtClock()}</span>
+    </div>`;
+  $('#tTheme').onclick = toggleTheme;
+  $('#tWx').onclick = sheetWeather;
+}
+
+/* ========== „Für dich“ ========== */
+function buildFeed(){
+  const t = todayISO();
+  const groups = [];
+  const n = simNow();
+
+  const openTasksToday = S.tasks.filter(x=>x.d===t && !x.done);
+  const doneToday      = S.tasks.filter(x=>x.d===t && x.done);
+  const todayEvents    = eventsOn(t);
+
+  // Bevorstehendes Ereignis heute (Hero)
+  const soon = todayEvents.find(e => e.t && (Number(e.t.split(':')[0]) - n.h) <= 4 && Number(e.t.split(':')[0]) >= n.h);
+  if(soon){
+    const openLink = soon.link ? S.tasks.find(x=>x.id===soon.link && !x.done) : null;
+    groups.push({label: Number(soon.t.split(':')[0])>=17 ? 'Heute Abend' : 'Gleich', hero:{e:soon, open:openLink}});
+  }
+
+  const restEvents = todayEvents.filter(e => !soon || e.id!==soon.id);
+  if(openTasksToday.length || restEvents.length || doneToday.length){
+    groups.push({label:'Heute', events:restEvents, tasks:[...openTasksToday,...doneToday]});
+  }
+
+  // Kommende Tage mit Verknüpfung zu Notizen/Aufgaben
+  const upcoming = S.events
+    .filter(e => e.d > t && daysBetween(t,e.d) <= 6 && e.cat!=='work')
+    .sort((a,b)=>a.d<b.d?-1:1).slice(0,2);
+  upcoming.forEach(e=>{
+    const link = e.link ? S.tasks.find(x=>x.id===e.link && !x.done) : null;
+    groups.push({label:relLabel(daysBetween(t,e.d)), events:[e], hint:link?`Du wolltest noch: ${link.title.replace(' kaufen','')} kaufen.`:null});
+  });
+
+  const later = S.tasks.filter(x=>!x.d && !x.done);
+  if(S.notes.length || later.length) groups.push({label:'Später', notes:S.notes, tasks:later});
+
+  return groups;
+}
+
+function feedHTML(){
+  const groups = buildFeed();
+  if(!groups.length) return `<div class="sec"><div class="card"><div class="empty">Nichts Offenes.<br>Leg das Handy ruhig weg.</div></div></div>`;
+  return `<div class="sec" id="secFeed">
+    <div class="group-lab"><span class="eyebrow">Für dich</span></div>
+    ${groups.map(g=>{
+      if(g.hero){
+        const e=g.hero.e;
+        return `<div class="group">
+          <div class="group-lab"><span class="eyebrow">${g.label}</span></div>
+          <div class="hero press" data-day="${e.d}">
+            <span class="eyebrow" style="color:${c(e.cat)}">${e.cat==='person'?'Persönlich':e.cat}</span>
+            <div class="hero-t">${e.title}</div>
+            <div class="hero-time">${e.t} Uhr</div>
+            ${g.hero.open?`<div class="hero-open"><button class="box press" data-task="${g.hero.open.id}">${ic.check}</button>
+              <div class="row-body"><div class="row-title" style="font-size:14.5px">Noch offen: ${g.hero.open.title}</div></div></div>`:''}
+          </div></div>`;
+      }
+      const rows = [];
+      (g.events||[]).forEach(e=>rows.push(`
+        <div class="row press" data-day="${e.d}">
+          <span class="tag" style="background:${c(e.cat)}"></span>
+          <div class="row-body"><div class="row-title">${e.title}</div>
+            ${g.hint?`<div class="row-note">${g.hint}</div>`:''}</div>
+          <div class="row-meta">${e.to?`${Number(e.d.slice(8))}.–${Number(e.to.slice(8))}.8.`:(e.t?e.t:'ganztägig')}</div>
+        </div>`));
+      (g.tasks||[]).forEach(x=>rows.push(`
+        <div class="row ${x.done?'done':''}">
+          <button class="box press ${x.done?'on':''}" data-task="${x.id}" aria-label="Erledigt">${ic.check}</button>
+          <div class="row-body"><div class="row-title">${x.title}</div></div>
+        </div>`));
+      (g.notes||[]).forEach(nt=>rows.push(`
+        <div class="row press" data-note="${nt.id}">
+          <span style="color:var(--muted);margin-top:1px">${ic.bulb}</span>
+          <div class="row-body"><div class="row-title">${nt.title}</div></div>
+        </div>`));
+      return `<div class="group">
+        <div class="group-lab"><span class="eyebrow">${g.label}</span></div>
+        <div class="card">${rows.join('')}</div></div>`;
+    }).join('')}
+  </div>`;
+}
+
+/* ========== Kalender ========== */
+function calHTML(){
+  const {y,m} = S.view;
+  const first = new Date(y,m,1);
+  const lead  = (first.getDay()+6)%7;
+  const dim   = new Date(y,m+1,0).getDate();
+  const dimP  = new Date(y,m,0).getDate();
+  const t     = todayISO();
+  let cells='';
+
+  for(let i=lead-1;i>=0;i--) cells += `<div class="day mute"><span class="n">${dimP-i}</span><span class="dots"></span></div>`;
+  for(let d=1;d<=dim;d++){
+    const ds = iso(y,m,d);
+    const evs = eventsOn(ds);
+    const range = evs.find(e=>e.to);
+    let rangeEl='';
+    if(range){
+      const s = ds===range.d, e = ds===range.to;
+      rangeEl = `<span class="range ${s?'s':''} ${e?'e':''}"></span>`;
+    }
+    const dots = evs.filter(e=>!e.to).slice(0,3).map(e=>`<i style="background:${c(e.cat)}"></i>`).join('');
+    const tk   = S.tasks.some(x=>x.d===ds && !x.done) ? `<i style="background:var(--muted)"></i>` : '';
+    cells += `<button class="day press ${ds===t?'today':''} ${ds===S.sel?'sel':''}" data-day="${ds}">
+      ${rangeEl}<span class="n">${d}</span><span class="dots">${dots}${tk}</span></button>`;
+  }
+  const tail = (7 - ((lead+dim)%7))%7;
+  for(let i=1;i<=tail;i++) cells += `<div class="day mute"><span class="n">${i}</span><span class="dots"></span></div>`;
+
+  const next = S.events.filter(e=>e.d>=t && e.cat!=='work').sort((a,b)=>a.d<b.d?-1:1)[0];
+  const foot = next ? `<div class="cal-foot"><span class="dot" style="background:${c(next.cat)};margin-top:0"></span>
+      Als Nächstes: ${next.title} · ${relLabel(daysBetween(t,next.d)).toLowerCase()}</div>` : '';
+
+  return `<div class="sec"><div class="card cal">
+    <div class="cal-head">
+      <div class="cal-month">${MO[m]} ${y}</div>
+      <div class="cal-nav"><button class="press" id="mPrev" aria-label="Vorheriger Monat">${ic.chevL}</button>
+      <button class="press" id="mNext" aria-label="Nächster Monat">${ic.chevR}</button></div>
+    </div>
+    <div class="wd">${['Mo','Di','Mi','Do','Fr','Sa','So'].map(d=>`<span>${d}</span>`).join('')}</div>
+    <div class="grid">${cells}</div>
+    ${foot}
+  </div></div>`;
+}
+
+/* ========== Kompakte Karten ========== */
+function mailHTML(){
+  return `<div class="sec"><button class="card mini press" style="width:100%" id="cMail">
+    <span class="mini-ico" style="${S.mailRead?'':'background:color-mix(in srgb,var(--c-person) 16%,transparent);color:var(--c-person)'}">${ic.mail}</span>
+    <span class="row-body"><span class="mini-t" style="display:block">${S.mailRead?'Nichts Wichtiges':'1 wichtige Mail'}</span>
+    <span class="mini-s" style="display:block">${S.mailRead?'12 Mails können warten':'Sparkasse · Rest kann warten'}</span></span>
+    <span style="color:var(--muted)">${ic.chevRs}</span></button></div>`;
+}
+function finHTML(){
+  return `<div class="sec"><button class="card fin press" id="cFin">
+    <span>
+      <span class="eyebrow" style="display:block;margin-bottom:9px">Konto</span>
+      <span class="fin-big">2.840 €</span>
+    </span>
+    <span class="fin-col">
+      <span class="fin-v" style="display:block">− 186 €</span>
+      <span class="mini-s" style="display:block;margin-top:2px">diese Woche</span>
+      <span class="fin-v pos" style="display:block;margin-top:9px">+ 4,8 %</span>
+      <span class="mini-s" style="display:block;margin-top:2px">ETFs</span>
+    </span></button></div>`;
+}
+function musicHTML(){
+  const p = (S.music.pos/S.music.len*100).toFixed(1);
+  return `<div class="sec"><div class="card player">
+    <button class="art press" id="mArt" aria-label="Player öffnen"></button>
+    <div class="row-body" style="min-width:0">
+      <div class="mini-t" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Get Lucky</div>
+      <div class="mini-s">Daft Punk · Random Access Memories</div>
+      <div class="pbar"><i style="width:${p}%"></i></div>
+    </div>
+    <button class="pbtn press" id="mPrevTrk" aria-label="Zurück" style="color:var(--muted)">${ic.prev}</button>
+    <button class="pbtn press" id="mPlay" aria-label="Abspielen">${S.music.playing?ic.pause:ic.play}</button>
+  </div></div>`;
+}
+function timerHTML(){
+  const pct = S.timer.total ? (1 - S.timer.left/S.timer.total) : 0;
+  return `<div class="sec"><button class="card timercard press" id="cTimer">
+    <span style="position:relative;width:44px;height:44px;flex:0 0 auto">
+      <svg width="44" height="44" viewBox="0 0 44 44" style="transform:rotate(-90deg)">
+        <circle cx="22" cy="22" r="19" fill="none" stroke="var(--hair)" stroke-width="2.5"/>
+        <circle cx="22" cy="22" r="19" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"
+          stroke-dasharray="119.4" stroke-dashoffset="${(119.4*pct).toFixed(1)}"/>
+      </svg>
+    </span>
+    <span class="row-body"><span class="tnum" style="display:block">${mmss(S.timer.left)}</span>
+    <span class="mini-s" style="display:block;margin-top:5px">Timer läuft</span></span>
+    <span style="color:var(--muted)">${ic.chevRs}</span></button></div>`;
+}
+
+/* ========== Priorisierung ========== */
+function order(){
+  const n = simNow();
+  if(S.timer.running) return ['timer','feed','cal','music'];        // alles Übrige tritt zurück
+  if(S.ctx==='abend') return ['feed','cal','music','mail'];          // kurz vor dem Termin
+  if(n.h < 11)        return ['cal','feed','mail','fin','music'];    // morgens: Überblick zuerst
+  if(n.h >= 17)       return ['feed','cal','music','mail'];
+  return ['feed','cal','mail','fin','music'];
+}
+function render(){
+  renderHead();
+  const map = {feed:feedHTML, cal:calHTML, mail:mailHTML, fin:finHTML, music:musicHTML, timer:timerHTML};
+  $('#stack').innerHTML = order().map(k=>map[k]()).join('');
+  $('#sbTime').textContent = fmtClock();
+  bind();
+}
+
+/* ========== Bindings ========== */
+function bind(){
+  const p=$('#mPrev'), nx=$('#mNext');
+  if(p) p.onclick = ()=>{ shiftMonth(-1) };
+  if(nx) nx.onclick = ()=>{ shiftMonth(1) };
+  document.querySelectorAll('[data-day]').forEach(el=>el.onclick = e=>{
+    if(e.target.closest('[data-task]')) return;
+    S.sel = el.dataset.day; render(); sheetDay(el.dataset.day);
+  });
+  document.querySelectorAll('[data-task]').forEach(el=>el.onclick = e=>{
+    e.stopPropagation();
+    const t = S.tasks.find(x=>x.id===el.dataset.task);
+    t.done = !t.done; render(); if(t.done) toast('Erledigt');
+  });
+  document.querySelectorAll('[data-note]').forEach(el=>el.onclick = ()=>sheetNote(el.dataset.note));
+  const m=$('#cMail'); if(m) m.onclick = sheetMail;
+  const f=$('#cFin');  if(f) f.onclick = sheetFin;
+  const a=$('#mArt');  if(a) a.onclick = sheetMusic;
+  const pl=$('#mPlay');if(pl) pl.onclick = e=>{ e.stopPropagation(); togglePlay(); };
+  const pt=$('#mPrevTrk'); if(pt) pt.onclick = e=>{ e.stopPropagation(); S.music.pos=0; render(); };
+  const ct=$('#cTimer'); if(ct) ct.onclick = sheetTimer;
+}
+function shiftMonth(dir){
+  let {y,m} = S.view; m+=dir;
+  if(m<0){m=11;y--} if(m>11){m=0;y++}
+  S.view={y,m};
+  render();
+  const g=document.querySelector('.grid');
+  if(g){ g.animate([{opacity:0,transform:`translateX(${dir*16}px)`},{opacity:1,transform:'none'}],{duration:320,easing:'cubic-bezier(.32,.72,0,1)'}); }
+}
+
+/* ========== Sheet-Infrastruktur ========== */
+let sheetOpen=false;
+function openSheet(html){
+  $('#sheetBody').innerHTML = html;
+  $('#sheet').classList.add('on'); $('#scrim').classList.add('on');
+  sheetOpen=true;
+}
+function closeSheet(){
+  $('#sheet').classList.remove('on'); $('#scrim').classList.remove('on'); sheetOpen=false;
+}
+$('#scrim').onclick = closeSheet;
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && sheetOpen) closeSheet(); });
+
+let toastT;
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),1800);
+}
+
+/* ========== Sheets ========== */
+function sheetDay(ds){
+  const d = new Date(ds), t = todayISO();
+  const evs = eventsOn(ds);
+  const tks = S.tasks.filter(x=>x.d===ds);
+  const rel = daysBetween(t,ds);
+  const body = (evs.length||tks.length) ? `
+    ${evs.map(e=>`<div class="list-item">
+      <span class="tag" style="background:${c(e.cat)};min-height:34px"></span>
+      <div class="row-body"><div class="row-title">${e.title}</div>
+      <div class="row-note">${e.to?`${Number(e.d.slice(8))}. – ${Number(e.to.slice(8))}. August`:(e.t?e.t+' Uhr':'ganztägig')}</div></div>
+    </div>`).join('')}
+    ${tks.map(x=>`<div class="list-item ${x.done?'done':''}">
+      <button class="box press ${x.done?'on':''}" data-task="${x.id}">${ic.check}</button>
+      <div class="row-body"><div class="row-title">${x.title}</div></div></div>`).join('')}`
+    : `<div class="empty">Nichts geplant.<br>Guter Tag für gar nichts.</div>`;
+
+  openSheet(`
+    <div class="sheet-title">${WDL[d.getDay()]}, ${Number(ds.slice(8))}. ${MO[Number(ds.slice(5,7))-1]}</div>
+    <div class="sheet-sub">${rel===0?'Heute':relLabel(rel)}</div>
+    ${body}
+    <button class="cta press" id="addHere">Etwas hinzufügen</button>`);
+  $('#addHere').onclick = ()=>sheetAdd(ds);
+  $('#sheetBody').querySelectorAll('[data-task]').forEach(el=>el.onclick=()=>{
+    const x=S.tasks.find(v=>v.id===el.dataset.task); x.done=!x.done; render(); sheetDay(ds);
+  });
+}
+
+function sheetNote(id){
+  const n = S.notes.find(x=>x.id===id);
+  openSheet(`
+    <div class="sheet-title">${n.title}</div>
+    <div class="sheet-sub">Gemerkt, ohne Datum</div>
+    <button class="cta press" id="nDone">Erledigt</button>
+    <button class="ghost press" id="nDate">Doch an einem Tag erinnern</button>`);
+  $('#nDone').onclick = ()=>{ S.notes = S.notes.filter(x=>x.id!==id); closeSheet(); render(); toast('Erledigt'); };
+  $('#nDate').onclick = ()=>{
+    S.tasks.push({id:'x'+Date.now(), title:n.title, d:todayISO(), done:false});
+    S.notes = S.notes.filter(x=>x.id!==id); closeSheet(); render(); toast('Für heute eingeplant');
+  };
+}
+
+function sheetAdd(preset){
+  openSheet(`
+    <div class="sheet-title">Was möchtest du hinzufügen?</div>
+    <div class="sheet-sub">Ein Wort reicht. Den Rest kannst du später ergänzen.</div>
+    <button class="opt press" data-kind="task"><span class="mini-ico">${ic.check}</span>
+      <span class="row-body"><span class="mini-t" style="display:block">Aufgabe</span><span class="mini-s">Etwas zu erledigen</span></span>
+      <span style="color:var(--muted)">${ic.chevRs}</span></button>
+    <button class="opt press" data-kind="event"><span class="mini-ico">${ic.cal}</span>
+      <span class="row-body"><span class="mini-t" style="display:block">Termin</span><span class="mini-s">Steht an einem Tag an</span></span>
+      <span style="color:var(--muted)">${ic.chevRs}</span></button>
+    <button class="opt press" data-kind="note"><span class="mini-ico">${ic.bulb}</span>
+      <span class="row-body"><span class="mini-t" style="display:block">Merken</span><span class="mini-s">Ohne Datum, für irgendwann</span></span>
+      <span style="color:var(--muted)">${ic.chevRs}</span></button>
+    <button class="opt press" data-kind="timer" style="border-top:1px solid var(--hair-2)"><span class="mini-ico">${ic.timer}</span>
+      <span class="row-body"><span class="mini-t" style="display:block">Timer</span><span class="mini-s">Läuft dann oben mit</span></span>
+      <span style="color:var(--muted)">${ic.chevRs}</span></button>`);
+  $('#sheetBody').querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.kind==='timer') sheetTimer();
+    else sheetInput(b.dataset.kind,preset);
+  });
+}
+
+function sheetInput(kind,preset){
+  const t = todayISO();
+  const titles = {task:'Neue Aufgabe', event:'Neuer Termin', note:'Merken'};
+  const ph = {task:'z. B. Neue Glühbirnen kaufen', event:'z. B. Essen mit Anna', note:'z. B. Beim nächsten Einkauf Spülmaschinentabs'};
+  const when = kind==='note'
+    ? `<div class="chips" id="chips">
+        <button class="chip on" data-w="none">Ohne Datum</button>
+        <button class="chip" data-w="${t}">Heute</button>
+        <button class="chip" data-w="${nextDay(t,1)}">Morgen</button>
+      </div>`
+    : `<div class="chips" id="chips">
+        <button class="chip ${!preset||preset===t?'on':''}" data-w="${t}">Heute</button>
+        <button class="chip ${preset===nextDay(t,1)?'on':''}" data-w="${nextDay(t,1)}">Morgen</button>
+        ${preset && preset!==t && preset!==nextDay(t,1) ? `<button class="chip on" data-w="${preset}">${Number(preset.slice(8))}. ${MO[Number(preset.slice(5,7))-1].slice(0,3)}</button>`:''}
+        ${kind==='task'?`<button class="chip" data-w="none">Irgendwann</button>`:''}
+      </div>`;
+  openSheet(`
+    <div class="sheet-title">${titles[kind]}</div>
+    <div class="sheet-sub">${kind==='note'?'Nur der Gedanke — mehr braucht es nicht.':'Wann?'}</div>
+    <input class="field" id="fTitle" placeholder="${ph[kind]}" autocomplete="off">
+    ${when}
+    <button class="cta press" id="save" disabled>Speichern</button>`);
+
+  const inp=$('#fTitle'); setTimeout(()=>inp.focus(),260);
+  let w = kind==='note' ? 'none' : (preset||t);
+  $('#chips').querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{
+    $('#chips').querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+    ch.classList.add('on'); w=ch.dataset.w;
+  });
+  inp.oninput = ()=>{ $('#save').disabled = !inp.value.trim(); };
+  inp.onkeydown = e=>{ if(e.key==='Enter' && inp.value.trim()) save(); };
+  $('#save').onclick = save;
+
+  function save(){
+    const v = inp.value.trim(); if(!v) return;
+    if(kind==='note' || (kind==='task' && w==='none')) S.notes.unshift({id:'n'+Date.now(), title:v});
+    else if(kind==='task') S.tasks.push({id:'x'+Date.now(), title:v, d:w, done:false});
+    else { S.events.push({id:'e'+Date.now(), d:w, t:null, title:v, cat:'person'}); S.view={y:Number(w.slice(0,4)), m:Number(w.slice(5,7))-1}; }
+    closeSheet(); render();
+    toast(kind==='event'?'Termin gespeichert':'Gespeichert');
+  }
+}
+function nextDay(ds,n){ const d=new Date(ds); d.setDate(d.getDate()+n); return iso(d.getFullYear(),d.getMonth(),d.getDate()); }
+
+function sheetTimer(){
+  const running = S.timer.running || S.timer.left>0;
+  const pct = S.timer.total ? (1 - S.timer.left/S.timer.total) : 0;
+  openSheet(`
+    <div class="sheet-title">Timer</div>
+    <div class="sheet-sub">${running?(S.timer.running?'Läuft':'Pausiert'):'Wie lange?'}</div>
+    ${running ? `
+      <div class="ringwrap">
+        <svg width="196" height="196" viewBox="0 0 196 196" style="transform:rotate(-90deg)">
+          <circle cx="98" cy="98" r="88" fill="none" stroke="var(--hair)" stroke-width="5"/>
+          <circle cx="98" cy="98" r="88" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"
+            stroke-dasharray="553" stroke-dashoffset="${(553*pct).toFixed(1)}" style="transition:stroke-dashoffset 1s linear"/>
+        </svg>
+        <span class="t" id="ringT">${mmss(S.timer.left)}</span>
+      </div>
+      <div class="tctl">
+        <button class="press" id="tReset">Zurücksetzen</button>
+        <button class="press fill" id="tToggle">${S.timer.running?'Pause':'Weiter'}</button>
+      </div>`
+    : `<div class="chips" style="margin-top:4px">
+        ${[1,3,5,10,20,45].map(m=>`<button class="chip press" data-min="${m}">${m} min</button>`).join('')}
+      </div>
+      <button class="cta press" id="tStart" disabled>Starten</button>`}`);
+
+  if(running){
+    $('#tToggle').onclick = ()=>{ S.timer.running=!S.timer.running; sheetTimer(); render(); };
+    $('#tReset').onclick  = ()=>{ S.timer={running:false,left:0,total:0}; closeSheet(); render(); };
+  } else {
+    let sel=0;
+    $('#sheetBody').querySelectorAll('[data-min]').forEach(b=>b.onclick=()=>{
+      $('#sheetBody').querySelectorAll('[data-min]').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); sel=Number(b.dataset.min); $('#tStart').disabled=false;
+    });
+    $('#tStart').onclick = ()=>{
+      S.timer={running:true,left:sel*60,total:sel*60}; closeSheet(); render(); toast(`Timer läuft · ${sel} min`);
+    };
+  }
+}
+
+function sheetMusic(){
+  const p=(S.music.pos/S.music.len*100).toFixed(1);
+  openSheet(`
+    <div style="display:flex;align-items:center;gap:16px;margin:8px 0 22px">
+      <span class="art" style="width:78px;height:78px;border-radius:16px"></span>
+      <span><span class="sheet-title" style="margin:0">Get Lucky</span>
+      <span class="sheet-sub" style="display:block;margin:4px 0 0">Daft Punk · Random Access Memories</span></span>
+    </div>
+    <div class="pbar" style="height:3px"><i style="width:${p}%"></i></div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums">
+      <span id="mPos">${mmss(S.music.pos)}</span><span>−${mmss(S.music.len-S.music.pos)}</span></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:34px;margin-top:26px">
+      <button class="press" style="color:var(--ink-2)" id="sPrev">${ic.prev}</button>
+      <button class="press" id="sPlay" style="width:66px;height:66px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center">${S.music.playing?ic.pause:ic.play}</button>
+      <button class="press" style="color:var(--ink-2)" id="sNext">${ic.next}</button>
+    </div>`);
+  $('#sPlay').onclick = ()=>{ togglePlay(); sheetMusic(); };
+  $('#sPrev').onclick = ()=>{ S.music.pos=0; sheetMusic(); render(); };
+  $('#sNext').onclick = ()=>{ S.music.pos=0; sheetMusic(); render(); toast('Nächster Titel'); };
+}
+function togglePlay(){ S.music.playing=!S.music.playing; render(); }
+
+function sheetChat(){
+  const chats = [
+    {n:'Anna', p:'Samstag passt bei mir 🙂', t:'11:04', u:true},
+    {n:'Max', p:'Schaust du am Sonntag vorbei?', t:'09:47', u:true},
+    {n:'Familie', p:'Papa: Bilder vom Garten', t:'Gestern', u:false},
+    {n:'Jonas', p:'Alles klar, bis dann', t:'Mo', u:false}
+  ];
+  S.chatUnread = 0;
+  openSheet(`
+    <div class="sheet-title">WhatsApp</div>
+    <div class="sheet-sub">2 ungelesene Nachrichten · im Prototyp simuliert</div>
+    ${chats.map(ch=>`<button class="list-item press" style="width:100%;text-align:left" data-chat="${ch.n}">
+      <span class="mini-ico" style="border-radius:50%;font-size:14px;font-weight:600;${ch.u?'background:color-mix(in srgb,var(--c-trip) 18%,transparent);color:var(--c-trip)':''}">${ch.n[0]}</span>
+      <span class="row-body"><span class="row-title" style="display:block">${ch.n}</span>
+      <span class="row-note" style="${ch.u?'color:var(--ink-2)':''}">${ch.p}</span></span>
+      <span class="row-meta">${ch.t}</span></button>`).join('')}
+    <div class="empty" style="padding-top:20px">In der echten App öffnet ein Tippen direkt den Chat.</div>`);
+  $('#sheetBody').querySelectorAll('[data-chat]').forEach(b=>b.onclick=()=>{
+    closeSheet(); render(); toast(`Chat mit ${b.dataset.chat}`);
+  });
+  render();
+}
+
+function sheetCam(){
+  const n = simNow();
+  openSheet(`
+    <div class="sheet-title">Foto merken</div>
+    <div class="sheet-sub">Regal, Zettel, Etikett — festhalten statt tippen.</div>
+    <div style="position:relative;height:190px;border-radius:20px;overflow:hidden;background:linear-gradient(150deg,#20242A,#3A4048 60%,#585F69)">
+      <svg width="100%" height="100%" viewBox="0 0 300 190" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.6" stroke-linecap="round">
+        <path d="M28 56V34h22M272 56V34h-22M28 134v22h22M272 134v22h-22"/>
+        <circle cx="150" cy="95" r="26" stroke="rgba(255,255,255,.35)"/>
+      </svg>
+    </div>
+    <button class="cta press" id="shot">Aufnehmen</button>
+    <button class="ghost press" id="camClose">Abbrechen</button>`);
+  $('#camClose').onclick = closeSheet;
+  $('#shot').onclick = ()=>{
+    S.notes.unshift({id:'n'+Date.now(), title:`Foto vom ${n.d}. ${MO[n.m]}`});
+    closeSheet(); render(); toast('Als Notiz gemerkt');
+  };
+}
+
+function sheetSearch(){
+  openSheet(`
+    <div class="sheet-title">Suchen</div>
+    <div class="sheet-sub">Öffnet im Prototyp eine simulierte Google-Suche.</div>
+    <input class="field" id="q" placeholder="Suchen oder Adresse eingeben" autocomplete="off">
+    <div id="qres"></div>`);
+  const q=$('#q'); setTimeout(()=>q.focus(),260);
+  const sugg = ['Wetter Passau','Öffnungszeiten Baumarkt','Spülmaschinentabs Test','Blumenladen in der Nähe'];
+  const draw = () => {
+    const v=q.value.trim();
+    $('#qres').innerHTML = v
+      ? `<div style="margin-top:18px">${[`${v} — Suchergebnisse`,`${v} kaufen`,`${v} in der Nähe`].map(s=>
+          `<div class="res"><div class="u">google.de › suche</div><div class="h">${s}</div></div>`).join('')}
+          <div class="empty" style="padding-top:18px">Simulierte Ergebnisse für den Prototyp.</div></div>`
+      : `<div style="margin-top:18px">${sugg.map(s=>`<button class="res press" style="display:block;width:100%;text-align:left" data-s="${s}">
+          <div class="u">Vorschlag</div><div class="h">${s}</div></button>`).join('')}</div>`;
+    $('#qres').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{ q.value=b.dataset.s; draw(); });
+  };
+  q.oninput = draw; draw();
+}
+
+function sheetMail(){
+  openSheet(`
+    <div class="sheet-title">1 wichtige Mail</div>
+    <div class="sheet-sub">12 weitere sortiert die App aus.</div>
+    <div class="list-item"><span class="tag" style="background:var(--c-person);min-height:40px"></span>
+      <div class="row-body"><div class="row-title">Sparkasse Passau</div>
+      <div class="row-note">Ihre neue Karte liegt zur Abholung bereit — bis 22. August.</div>
+      <div class="row-note" style="margin-top:6px">Heute, 09:14</div></div></div>
+    <button class="cta press" id="mkRead">Als gelesen markieren</button>
+    <button class="ghost press" id="mkTask">Als Aufgabe merken</button>`);
+  $('#mkRead').onclick = ()=>{ S.mailRead=true; closeSheet(); render(); toast('Gelesen'); };
+  $('#mkTask').onclick = ()=>{
+    S.tasks.push({id:'x'+Date.now(), title:'Neue Karte bei der Sparkasse abholen', d:todayISO(), done:false});
+    S.mailRead=true; closeSheet(); render(); toast('Als Aufgabe gemerkt');
+  };
+}
+
+function sheetFin(){
+  const cats=[['Lebensmittel',72,'−72 €'],['Tanken',54,'−54 €'],['Restaurant',38,'−38 €'],['Sonstiges',22,'−22 €']];
+  openSheet(`
+    <div class="sheet-title">2.840 €</div>
+    <div class="sheet-sub">Kontostand · Demo-Daten</div>
+    <span class="eyebrow">Diese Woche · −186 €</span>
+    <div class="bars">${cats.map(([n,v,l])=>`<div class="brow"><span style="width:96px">${n}</span>
+      <span class="bar-t"><i style="width:${(v/72*100).toFixed(0)}%"></i></span><span class="v">${l}</span></div>`).join('')}</div>
+    <div style="margin-top:24px"><span class="eyebrow">ETFs · 30 Tage</span>
+      <div style="display:flex;align-items:flex-end;gap:14px;margin-top:10px">
+        <span class="fin-big pos">+4,8 %</span>
+        <svg width="150" height="42" viewBox="0 0 150 42" fill="none" style="flex:1">
+          <path d="M0 34 L18 30 L34 33 L52 24 L70 27 L88 18 L106 20 L124 11 L150 6" stroke="var(--c-trip)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div></div>
+    <div class="empty" style="padding-top:22px">Alle Zahlen sind Beispieldaten.</div>`);
+}
+
+function sheetWeather(){
+  const hrs=[['13',18],['14',19],['15',20],['16',19],['17',16],['18',15],['19',15]];
+  openSheet(`
+    <div class="sheet-title">18° · Sonnig</div>
+    <div class="sheet-sub">Passau · 14° bis 20°</div>
+    <div class="hrow">${hrs.map(([h,t],i)=>`<div class="hcell">${h}<span style="display:block;margin-top:8px;color:${i>=4?'var(--c-trip)':'var(--muted)'}">${i>=4?ic.wrain:ic.wsun}</span><b>${t}°</b></div>`).join('')}</div>
+    <div class="list-item" style="margin-top:18px"><span class="tag" style="background:var(--c-trip);min-height:34px"></span>
+      <div class="row-body"><div class="row-title">Regen ab 17:00</div>
+      <div class="row-note">Bis dahin trocken. Für das Paket reicht der Nachmittag.</div></div></div>`);
+}
+
+/* ========== Theme ========== */
+function toggleTheme(){
+  S.theme = S.theme==='light' ? 'dark' : 'light';
+  $('#screen').classList.toggle('dark', S.theme==='dark');
+  document.body.classList.toggle('stage-dark', S.theme==='dark');
+  render();
+}
+
+/* ========== Action-Bar ========== */
+$('#bAdd').innerHTML   = ic.plus;
+$('#bChat').innerHTML  = ic.chat;
+$('#bCam').innerHTML   = ic.cam;
+$('#bSearch').innerHTML= ic.search;
+$('#bAdd').onclick   = ()=>sheetAdd(null);
+$('#bChat').onclick  = sheetChat;
+$('#bCam').onclick   = sheetCam;
+$('#bSearch').onclick= sheetSearch;
+
+/* ========== Demo-Kontext ========== */
+const demo=$('#demo');
+Object.entries(CTX).forEach(([k,v])=>{
+  const b=document.createElement('button');
+  b.textContent=v.label; b.className = k===S.ctx?'on':'';
+  b.onclick = ()=>{
+    S.ctx=k;
+    S.timer = CTX[k].timer ? {running:true,left:CTX[k].timer,total:900} : {running:false,left:0,total:0};
+    if(k==='abend'){ S.tasks.find(x=>x.id==='t1').d='2026-08-14'; S.tasks.find(x=>x.id==='t1').done=false; }
+    else { S.tasks.find(x=>x.id==='t1').d='2026-08-11'; }
+    S.view={y:2026,m:7};
+    demo.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    closeSheet(); render(); $('#scroll').scrollTo({top:0,behavior:'smooth'});
+  };
+  demo.appendChild(b);
+});
+
+/* ========== Ticks ========== */
+setInterval(()=>{
+  if(S.timer.running && S.timer.left>0){
+    S.timer.left--;
+    const rt=$('#ringT'); if(rt) rt.textContent=mmss(S.timer.left);
+    const tn=document.querySelector('#cTimer .tnum'); if(tn) tn.textContent=mmss(S.timer.left);
+    if(S.timer.left===0){ S.timer.running=false; render(); toast('Timer abgelaufen'); }
+  }
+  if(S.music.playing){
+    S.music.pos = (S.music.pos+1) % S.music.len;
+    const b=document.querySelector('.player .pbar i'); if(b) b.style.width=(S.music.pos/S.music.len*100)+'%';
+    const mp=$('#mPos'); if(mp) mp.textContent=mmss(S.music.pos);
+  }
+  const bc=$('#bChat'); if(bc) bc.classList.toggle('live', S.chatUnread>0);
+  if(S.ctx==='live') $('#sbTime').textContent = fmtClock();
+},1000);
+
+/* Skalierung nur am Desktop (auf dem Handy läuft die App im Vollbild) */
+function fit(){
+  const ph=document.getElementById('phone');
+  if(window.innerWidth<=560 || window.matchMedia('(display-mode: standalone)').matches){
+    ph.style.transform=''; ph.style.marginBottom=''; return;
+  }
+  const h=window.innerHeight-130, w=window.innerWidth-24;
+  const s=Math.min(1, h/844, w/390);
+  if(s<1){ ph.style.transform=`scale(${s})`; ph.style.marginBottom=`${-(1-s)*844}px`; }
+  else { ph.style.transform=''; ph.style.marginBottom=''; }
+}
+window.addEventListener('resize',fit);
+
+/* ===== Daten lokal behalten ===== */
+const KEY='blick.v1';
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify({
+    tasks:S.tasks, notes:S.notes, events:S.events, theme:S.theme, mailRead:S.mailRead
+  })); }catch(e){}
+}
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY); if(!raw) return;
+    const d = JSON.parse(raw);
+    if(d.tasks) S.tasks=d.tasks;
+    if(d.notes) S.notes=d.notes;
+    if(d.events) S.events=d.events;
+    if(typeof d.mailRead==='boolean') S.mailRead=d.mailRead;
+    if(d.theme==='dark'){
+      S.theme='dark';
+      document.getElementById('screen').classList.add('dark');
+      document.body.classList.add('stage-dark');
+    }
+  }catch(e){}
+}
+load();
+fit();
+render();
+setInterval(save, 2000);
+window.addEventListener('pagehide', save);
+
+/* ===== Offline-Betrieb ===== */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
