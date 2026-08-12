@@ -1,7 +1,7 @@
 /* Blick – Service Worker.
    WICHTIG: Nach jeder Änderung an index.html die Versionsnummer erhöhen,
    sonst zeigt das Handy weiter die alte Fassung. */
-const VERSION = 'blick-v1';
+const VERSION = 'blick-v3';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

@@ -24,7 +24,9 @@
   --hair-2:rgba(22,24,29,.05);
   --shadow:0 1px 2px rgba(16,18,23,.04), 0 8px 24px -12px rgba(16,18,23,.18);
   --shadow-lg:0 24px 60px -20px rgba(16,18,23,.35);
-  --c-person:#C4736E;
+  --accent:#ED6B5B;
+  --accent-ink:#FFFFFF;
+  --c-person:#ED6B5B;
   --c-birthday:#C09047;
   --c-trip:#5C8A86;
   --c-food:#7A6FA4;
@@ -43,7 +45,9 @@
   --hair-2:rgba(255,255,255,.06);
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
   --shadow-lg:0 24px 60px -20px rgba(0,0,0,.8);
-  --c-person:#D0857F;
+  --accent:#F2806F;
+  --accent-ink:#1A0F0D;
+  --c-person:#F2806F;
   --c-birthday:#D2A257;
   --c-trip:#6C9E99;
   --c-food:#8E82BB;
@@ -162,9 +166,9 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .day{position:relative;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);border-radius:12px;transition:background .2s var(--ease)}
 .day.mute{color:var(--muted);opacity:.42}
 .day .n{position:relative;z-index:2;width:27px;height:27px;display:grid;place-items:center;border-radius:50%;transition:all .3s var(--ease)}
-.day.today .n{background:var(--ink);color:var(--paper);font-weight:600}
-.day.sel .n{box-shadow:0 0 0 1.5px var(--ink)}
-.day.today.sel .n{box-shadow:0 0 0 1.5px var(--ink),0 0 0 4px var(--bg)}
+.day.today .n{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.day.sel .n{box-shadow:0 0 0 1.5px var(--accent)}
+.day.today.sel .n{box-shadow:0 0 0 1.5px var(--accent),0 0 0 4px var(--bg)}
 .dots{display:flex;gap:3px;height:5px;align-items:center;position:relative;z-index:2}
 .dots i{width:5px;height:5px;border-radius:50%;display:block}
 .range{position:absolute;top:8px;bottom:8px;left:0;right:0;background:color-mix(in srgb,var(--c-trip) 15%,transparent);z-index:1}
@@ -186,7 +190,7 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .art{width:48px;height:48px;border-radius:12px;flex:0 0 auto;background:linear-gradient(140deg,#2A2C33,#6E5140 55%,#C9A227);position:relative;overflow:hidden}
 .art:after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 30% 25%,rgba(255,255,255,.35),transparent 70%)}
 .pbar{height:2px;border-radius:2px;background:var(--hair);margin-top:8px;overflow:hidden}
-.pbar i{display:block;height:100%;background:var(--ink-2);transition:width .9s linear}
+.pbar i{display:block;height:100%;background:var(--accent);transition:width .9s linear}
 .pbtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;color:var(--ink)}
 .timercard{display:flex;align-items:center;gap:16px;padding:16px 18px;width:100%;text-align:left}
 .tnum{font-size:30px;font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
@@ -202,8 +206,8 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 }
 .bar button{width:56px;height:44px;border-radius:20px;display:grid;place-items:center;color:var(--ink-2);position:relative}
 .bar button:hover{background:var(--hair-2)}
-.bar .primary{color:var(--paper);background:var(--ink)}
-.bar .primary:hover{background:var(--ink)}
+.bar .primary{color:var(--accent-ink);background:var(--accent)}
+.bar .primary:hover{background:var(--accent)}
 .bar .live:after{content:"";position:absolute;top:8px;right:13px;width:5px;height:5px;border-radius:50%;background:var(--c-person)}
 .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:var(--ink);opacity:.28;z-index:36}
 
@@ -234,8 +238,8 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .field:focus{border-color:var(--hair)}
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
 .chip{padding:9px 14px;border-radius:14px;background:var(--hair-2);font-size:13px;color:var(--ink-2);letter-spacing:-.005em}
-.chip.on{background:var(--ink);color:var(--paper)}
-.cta{width:100%;margin-top:20px;padding:16px;border-radius:18px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:500;letter-spacing:-.01em}
+.chip.on{background:var(--accent);color:var(--accent-ink)}
+.cta{width:100%;margin-top:20px;padding:16px;border-radius:18px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:500;letter-spacing:-.01em}
 .cta[disabled]{opacity:.35;cursor:not-allowed}
 .ghost{width:100%;margin-top:10px;padding:14px;border-radius:18px;font-size:14px;color:var(--muted)}
 .list-item{display:flex;gap:13px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--hair-2)}
@@ -245,7 +249,7 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .ringwrap .t{position:absolute;font-size:42px;font-weight:200;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .tctl{display:flex;gap:10px;margin-top:18px}
 .tctl button{flex:1;padding:15px;border-radius:18px;background:var(--hair-2);font-size:14.5px;letter-spacing:-.01em}
-.tctl button.fill{background:var(--ink);color:var(--paper)}
+.tctl button.fill{background:var(--accent);color:var(--accent-ink)}
 .bars{display:flex;flex-direction:column;gap:11px;margin-top:6px}
 .brow{display:flex;align-items:center;gap:12px;font-size:13px}
 .brow .bar-t{flex:1;height:5px;border-radius:3px;background:var(--hair-2);overflow:hidden}
@@ -275,6 +279,21 @@ body.stage-dark .demo .lab{color:rgba(255,255,255,.4)}
 body.stage-dark .demo button{background:rgba(255,255,255,.08);color:#E6E7EA;border-color:rgba(255,255,255,.09)}
 .demo button.on{background:#16181D;color:#fff;border-color:#16181D}
 body.stage-dark .demo button.on{background:#fff;color:#16181D}
+/* ===== Machbarkeits-Legende (nur am PC sichtbar) ===== */
+.legend{max-width:520px;width:100%;font-size:12.5px;line-height:1.5}
+.legend h4{font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px;color:rgba(22,24,29,.45);font-weight:600;text-align:center}
+body.stage-dark .legend h4{color:rgba(255,255,255,.42)}
+.lrow{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.5);margin-bottom:5px;color:#16181D}
+body.stage-dark .lrow{background:rgba(255,255,255,.06);color:#E6E7EA}
+.lrow b{font-weight:600;min-width:108px;flex:0 0 auto}
+.lrow span{color:rgba(22,24,29,.6)}
+body.stage-dark .lrow span{color:rgba(255,255,255,.55)}
+.lrow i{width:7px;height:7px;border-radius:50%;flex:0 0 auto;margin-top:6px;font-style:normal}
+.g{background:#4C8A6E}.y{background:#C09047}.r{background:#B96A64}
+.lkey{display:flex;gap:16px;justify-content:center;margin-top:12px;font-size:11px;color:rgba(22,24,29,.5)}
+body.stage-dark .lkey{color:rgba(255,255,255,.45)}
+.lkey span{display:flex;align-items:center;gap:6px}
+
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
 /* ===== Auf dem Handy: kein Rahmen, echtes Vollbild ===== */
@@ -289,7 +308,7 @@ body.stage-dark .demo button.on{background:#fff;color:#16181D}
   .bar{bottom:calc(env(safe-area-inset-bottom) + 16px)}
   .homebar{display:none}
   .sheet{border-radius:30px 30px 0 0;padding-bottom:env(safe-area-inset-bottom)}
-  .demo{display:none}
+  .demo,.legend{display:none}
 }
 @media (max-width:430px),(max-height:900px){
   body{padding:12px 8px}
@@ -336,6 +355,8 @@ body.stage-dark .demo button.on{background:#fff;color:#16181D}
 <div class="demo" id="demo">
   <span class="lab">Demo-Kontext — so verändert sich der Screen</span>
 </div>
+
+<div class="legend" id="legend"><h4>Was davon wirklich geht</h4><div class="lrow"><i class="g"></i><b>Kalender</b><span>Google-Kalender lesen und schreiben — Standardschnittstelle in Android</span></div><div class="lrow"><i class="g"></i><b>Aufgaben &amp; Merken</b><span>Rein lokal auf dem Handy, kein Konto nötig</span></div><div class="lrow"><i class="g"></i><b>Wetter</b><span>Open-Meteo, kostenlos und ohne Anmeldung</span></div><div class="lrow"><i class="g"></i><b>Timer</b><span>Mit Benachrichtigung, läuft auch bei geschlossener App</span></div><div class="lrow"><i class="g"></i><b>Kamera</b><span>Foto aufnehmen und als Notiz ablegen</span></div><div class="lrow"><i class="g"></i><b>Google-Suche</b><span>Öffnet die Suche — nur ein Link</span></div><div class="lrow"><i class="g"></i><b>WhatsApp</b><span>Öffnet die App. Nachrichten auslesen geht nicht</span></div><div class="lrow"><i class="y"></i><b>E-Mail</b><span>Gmail oder IMAP. Ein Abend Einrichtung, dann echt</span></div><div class="lrow"><i class="g"></i><b>Spotify</b><span>Play/Pause über die offizielle Schnittstelle — Premium vorhanden</span></div><div class="lrow"><i class="r"></i><b>Banking</b><span>Entfernt. DKB gibt privaten Apps keinen Zugang</span></div><div class="lkey"><span><i class="g" style="width:7px;height:7px;border-radius:50%;display:block"></i>fertig baubar</span><span><i class="y" style="width:7px;height:7px;border-radius:50%;display:block"></i>Anmeldung nötig</span><span><i class="r" style="width:7px;height:7px;border-radius:50%;display:block"></i>nicht möglich</span></div></div>
 
 <script>
 /* ========== Icons ========== */
@@ -394,8 +415,6 @@ const S = {
   ],
   timer:{running:false, left:0, total:0},
   music:{playing:false, pos:82, len:248},
-  mailRead:false,
-  chatUnread:2
 };
 
 const CTX = {
@@ -484,11 +503,11 @@ function renderHead(){
     <div class="arc">
       <svg viewBox="0 0 ${W} 58" preserveAspectRatio="none">
         <path d="${arcPath}" stroke="var(--hair)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <path d="${arcPath}" stroke="var(--ink)" stroke-width="1.5" fill="none" stroke-linecap="round"
-              stroke-dasharray="1000" stroke-dashoffset="${(1000-nowP*470).toFixed(0)}" opacity=".55"/>
+        <path d="${arcPath}" stroke="var(--accent)" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-dasharray="1000" stroke-dashoffset="${(1000-nowP*470).toFixed(0)}" opacity=".9"/>
         ${marks}
         <circle cx="${px(nowP).toFixed(1)}" cy="${py(nowP).toFixed(1)}" r="6.5" fill="var(--bg)"/>
-        <circle cx="${px(nowP).toFixed(1)}" cy="${py(nowP).toFixed(1)}" r="3.6" fill="var(--ink)"/>
+        <circle cx="${px(nowP).toFixed(1)}" cy="${py(nowP).toFixed(1)}" r="3.6" fill="var(--accent)"/>
       </svg>
       <span class="arc-lab" style="left:2px">6 Uhr</span>
       <span class="arc-lab" style="right:2px">23 Uhr</span>
@@ -623,25 +642,25 @@ function calHTML(){
 }
 
 /* ========== Kompakte Karten ========== */
+const INBOX = [
+  {id:'m1', from:'Sparkasse Passau', sub:'Ihre neue Karte liegt bereit', pre:'Abholung bis 22. August in Ihrer Filiale.', t:'09:14', imp:true,  read:false},
+  {id:'m2', from:'Anna',             sub:'Samstag',                       pre:'Passt dir 19 Uhr? Dann koche ich was.', t:'08:40', imp:false, read:false},
+  {id:'m3', from:'Thomann',          sub:'Deine Bestellung ist unterwegs',pre:'Sendungsnummer 00340434…',            t:'Gestern', imp:false, read:true},
+  {id:'m4', from:'Stadtwerke Passau',sub:'Jahresabrechnung 2026',         pre:'Ihre Abrechnung steht im Portal bereit.', t:'Gestern', imp:false, read:true},
+  {id:'m5', from:'GitHub',           sub:'Security advisory',             pre:'A new advisory affects one of your…',  t:'Mo',     imp:false, read:true},
+  {id:'m6', from:'Nova Launcher',    sub:'Update verfügbar',              pre:'Version 8.1 mit neuen Gesten.',        t:'Mo',     imp:false, read:true},
+  {id:'m7', from:'Max',              sub:'Re: Sonntag',                   pre:'Alles klar, ich bring was mit.',       t:'So',     imp:false, read:true},
+  {id:'m8', from:'Newsletter Heise', pre:'Die Woche im Rückblick',        sub:'heise online kompakt',                 t:'So',     imp:false, read:true},
+  {id:'m9', from:'Amazon',           sub:'Bewerte deinen Einkauf',        pre:'Wie zufrieden warst du?',              t:'Sa',     imp:false, read:true}
+];
 function mailHTML(){
+  const unread = INBOX.filter(m=>!m.read).length;
+  const imp = INBOX.filter(m=>m.imp && !m.read).length;
   return `<div class="sec"><button class="card mini press" style="width:100%" id="cMail">
-    <span class="mini-ico" style="${S.mailRead?'':'background:color-mix(in srgb,var(--c-person) 16%,transparent);color:var(--c-person)'}">${ic.mail}</span>
-    <span class="row-body"><span class="mini-t" style="display:block">${S.mailRead?'Nichts Wichtiges':'1 wichtige Mail'}</span>
-    <span class="mini-s" style="display:block">${S.mailRead?'12 Mails können warten':'Sparkasse · Rest kann warten'}</span></span>
+    <span class="mini-ico" style="${imp?'background:color-mix(in srgb,var(--c-person) 16%,transparent);color:var(--c-person)':''}">${ic.mail}</span>
+    <span class="row-body"><span class="mini-t" style="display:block">${imp?`${imp} wichtige Mail`:(unread?`${unread} neue Mails`:'Posteingang')}</span>
+    <span class="mini-s" style="display:block">${imp?'Sparkasse · Rest kann warten':'Nichts Dringendes'}</span></span>
     <span style="color:var(--muted)">${ic.chevRs}</span></button></div>`;
-}
-function finHTML(){
-  return `<div class="sec"><button class="card fin press" id="cFin">
-    <span>
-      <span class="eyebrow" style="display:block;margin-bottom:9px">Konto</span>
-      <span class="fin-big">2.840 €</span>
-    </span>
-    <span class="fin-col">
-      <span class="fin-v" style="display:block">− 186 €</span>
-      <span class="mini-s" style="display:block;margin-top:2px">diese Woche</span>
-      <span class="fin-v pos" style="display:block;margin-top:9px">+ 4,8 %</span>
-      <span class="mini-s" style="display:block;margin-top:2px">ETFs</span>
-    </span></button></div>`;
 }
 function musicHTML(){
   const p = (S.music.pos/S.music.len*100).toFixed(1);
@@ -662,7 +681,7 @@ function timerHTML(){
     <span style="position:relative;width:44px;height:44px;flex:0 0 auto">
       <svg width="44" height="44" viewBox="0 0 44 44" style="transform:rotate(-90deg)">
         <circle cx="22" cy="22" r="19" fill="none" stroke="var(--hair)" stroke-width="2.5"/>
-        <circle cx="22" cy="22" r="19" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"
+        <circle cx="22" cy="22" r="19" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"
           stroke-dasharray="119.4" stroke-dashoffset="${(119.4*pct).toFixed(1)}"/>
       </svg>
     </span>
@@ -674,15 +693,15 @@ function timerHTML(){
 /* ========== Priorisierung ========== */
 function order(){
   const n = simNow();
-  if(S.timer.running) return ['timer','feed','cal','music'];        // alles Übrige tritt zurück
-  if(S.ctx==='abend') return ['feed','cal','music','mail'];          // kurz vor dem Termin
-  if(n.h < 11)        return ['cal','feed','mail','fin','music'];    // morgens: Überblick zuerst
+  if(S.timer.running) return ['timer','feed','cal','music'];   // alles Übrige tritt zurück
+  if(S.ctx==='abend') return ['feed','cal','music','mail'];     // kurz vor dem Termin
+  if(n.h < 11)        return ['cal','feed','mail','music'];     // morgens: Überblick zuerst
   if(n.h >= 17)       return ['feed','cal','music','mail'];
-  return ['feed','cal','mail','fin','music'];
+  return ['feed','cal','mail','music'];
 }
 function render(){
   renderHead();
-  const map = {feed:feedHTML, cal:calHTML, mail:mailHTML, fin:finHTML, music:musicHTML, timer:timerHTML};
+  const map = {feed:feedHTML, cal:calHTML, mail:mailHTML, music:musicHTML, timer:timerHTML};
   $('#stack').innerHTML = order().map(k=>map[k]()).join('');
   $('#sbTime').textContent = fmtClock();
   bind();
@@ -704,7 +723,6 @@ function bind(){
   });
   document.querySelectorAll('[data-note]').forEach(el=>el.onclick = ()=>sheetNote(el.dataset.note));
   const m=$('#cMail'); if(m) m.onclick = sheetMail;
-  const f=$('#cFin');  if(f) f.onclick = sheetFin;
   const a=$('#mArt');  if(a) a.onclick = sheetMusic;
   const pl=$('#mPlay');if(pl) pl.onclick = e=>{ e.stopPropagation(); togglePlay(); };
   const pt=$('#mPrevTrk'); if(pt) pt.onclick = e=>{ e.stopPropagation(); S.music.pos=0; render(); };
@@ -856,7 +874,7 @@ function sheetTimer(){
       <div class="ringwrap">
         <svg width="196" height="196" viewBox="0 0 196 196" style="transform:rotate(-90deg)">
           <circle cx="98" cy="98" r="88" fill="none" stroke="var(--hair)" stroke-width="5"/>
-          <circle cx="98" cy="98" r="88" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"
+          <circle cx="98" cy="98" r="88" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"
             stroke-dasharray="553" stroke-dashoffset="${(553*pct).toFixed(1)}" style="transition:stroke-dashoffset 1s linear"/>
         </svg>
         <span class="t" id="ringT">${mmss(S.timer.left)}</span>
@@ -898,7 +916,7 @@ function sheetMusic(){
       <span id="mPos">${mmss(S.music.pos)}</span><span>−${mmss(S.music.len-S.music.pos)}</span></div>
     <div style="display:flex;align-items:center;justify-content:center;gap:34px;margin-top:26px">
       <button class="press" style="color:var(--ink-2)" id="sPrev">${ic.prev}</button>
-      <button class="press" id="sPlay" style="width:66px;height:66px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center">${S.music.playing?ic.pause:ic.play}</button>
+      <button class="press" id="sPlay" style="width:66px;height:66px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center">${S.music.playing?ic.pause:ic.play}</button>
       <button class="press" style="color:var(--ink-2)" id="sNext">${ic.next}</button>
     </div>`);
   $('#sPlay').onclick = ()=>{ togglePlay(); sheetMusic(); };
@@ -908,26 +926,8 @@ function sheetMusic(){
 function togglePlay(){ S.music.playing=!S.music.playing; render(); }
 
 function sheetChat(){
-  const chats = [
-    {n:'Anna', p:'Samstag passt bei mir 🙂', t:'11:04', u:true},
-    {n:'Max', p:'Schaust du am Sonntag vorbei?', t:'09:47', u:true},
-    {n:'Familie', p:'Papa: Bilder vom Garten', t:'Gestern', u:false},
-    {n:'Jonas', p:'Alles klar, bis dann', t:'Mo', u:false}
-  ];
-  S.chatUnread = 0;
-  openSheet(`
-    <div class="sheet-title">WhatsApp</div>
-    <div class="sheet-sub">2 ungelesene Nachrichten · im Prototyp simuliert</div>
-    ${chats.map(ch=>`<button class="list-item press" style="width:100%;text-align:left" data-chat="${ch.n}">
-      <span class="mini-ico" style="border-radius:50%;font-size:14px;font-weight:600;${ch.u?'background:color-mix(in srgb,var(--c-trip) 18%,transparent);color:var(--c-trip)':''}">${ch.n[0]}</span>
-      <span class="row-body"><span class="row-title" style="display:block">${ch.n}</span>
-      <span class="row-note" style="${ch.u?'color:var(--ink-2)':''}">${ch.p}</span></span>
-      <span class="row-meta">${ch.t}</span></button>`).join('')}
-    <div class="empty" style="padding-top:20px">In der echten App öffnet ein Tippen direkt den Chat.</div>`);
-  $('#sheetBody').querySelectorAll('[data-chat]').forEach(b=>b.onclick=()=>{
-    closeSheet(); render(); toast(`Chat mit ${b.dataset.chat}`);
-  });
-  render();
+  closeSheet();
+  toast('\u00d6ffnet WhatsApp');
 }
 
 function sheetCam(){
@@ -972,38 +972,47 @@ function sheetSearch(){
 }
 
 function sheetMail(){
+  const imp = INBOX.filter(m=>m.imp);
+  const rest = INBOX.filter(m=>!m.imp);
+  const row = m => `<button class="list-item press" style="width:100%;text-align:left" data-mail="${m.id}">
+      <span class="tag" style="background:${m.imp?'var(--c-person)':(m.read?'transparent':'var(--muted)')};min-height:38px"></span>
+      <span class="row-body">
+        <span style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
+          <span class="row-title" style="${m.read?'':'font-weight:600'}">${m.from}</span>
+          <span class="row-meta">${m.t}</span></span>
+        <span class="row-note" style="color:var(--ink-2);margin-top:3px;display:block">${m.sub}</span>
+        <span class="row-note" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.pre}</span>
+      </span></button>`;
   openSheet(`
-    <div class="sheet-title">1 wichtige Mail</div>
-    <div class="sheet-sub">12 weitere sortiert die App aus.</div>
-    <div class="list-item"><span class="tag" style="background:var(--c-person);min-height:40px"></span>
-      <div class="row-body"><div class="row-title">Sparkasse Passau</div>
-      <div class="row-note">Ihre neue Karte liegt zur Abholung bereit — bis 22. August.</div>
-      <div class="row-note" style="margin-top:6px">Heute, 09:14</div></div></div>
-    <button class="cta press" id="mkRead">Als gelesen markieren</button>
-    <button class="ghost press" id="mkTask">Als Aufgabe merken</button>`);
-  $('#mkRead').onclick = ()=>{ S.mailRead=true; closeSheet(); render(); toast('Gelesen'); };
-  $('#mkTask').onclick = ()=>{
-    S.tasks.push({id:'x'+Date.now(), title:'Neue Karte bei der Sparkasse abholen', d:todayISO(), done:false});
-    S.mailRead=true; closeSheet(); render(); toast('Als Aufgabe gemerkt');
-  };
+    <div class="sheet-title">Posteingang</div>
+    <div class="sheet-sub">${INBOX.filter(m=>!m.read).length} ungelesen \u00b7 ${INBOX.length} insgesamt</div>
+    <span class="eyebrow">Wichtig</span>
+    <div style="margin-bottom:20px">${imp.map(row).join('')}</div>
+    <span class="eyebrow">Alles Weitere</span>
+    <div>${rest.map(row).join('')}</div>
+    <div class="empty" style="padding-top:20px">Scrollbar \u2014 die ganze Inbox, ruhig sortiert.</div>`);
+  $('#sheetBody').querySelectorAll('[data-mail]').forEach(b=>b.onclick=()=>{
+    const m = INBOX.find(x=>x.id===b.dataset.mail);
+    m.read = true;
+    sheetMailOne(m);
+  });
 }
 
-function sheetFin(){
-  const cats=[['Lebensmittel',72,'−72 €'],['Tanken',54,'−54 €'],['Restaurant',38,'−38 €'],['Sonstiges',22,'−22 €']];
+function sheetMailOne(m){
   openSheet(`
-    <div class="sheet-title">2.840 €</div>
-    <div class="sheet-sub">Kontostand · Demo-Daten</div>
-    <span class="eyebrow">Diese Woche · −186 €</span>
-    <div class="bars">${cats.map(([n,v,l])=>`<div class="brow"><span style="width:96px">${n}</span>
-      <span class="bar-t"><i style="width:${(v/72*100).toFixed(0)}%"></i></span><span class="v">${l}</span></div>`).join('')}</div>
-    <div style="margin-top:24px"><span class="eyebrow">ETFs · 30 Tage</span>
-      <div style="display:flex;align-items:flex-end;gap:14px;margin-top:10px">
-        <span class="fin-big pos">+4,8 %</span>
-        <svg width="150" height="42" viewBox="0 0 150 42" fill="none" style="flex:1">
-          <path d="M0 34 L18 30 L34 33 L52 24 L70 27 L88 18 L106 20 L124 11 L150 6" stroke="var(--c-trip)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div></div>
-    <div class="empty" style="padding-top:22px">Alle Zahlen sind Beispieldaten.</div>`);
+    <button class="press" id="mBack" style="display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;margin:2px 0 14px">
+      ${ic.chevL}<span>Posteingang</span></button>
+    <div class="sheet-title">${m.sub}</div>
+    <div class="sheet-sub">${m.from} \u00b7 ${m.t}</div>
+    <div style="font-size:15px;line-height:1.55;color:var(--ink-2)">${m.pre}</div>
+    <button class="cta press" id="mTask">Als Aufgabe merken</button>
+    <button class="ghost press" id="mOpen">In der Mail-App \u00f6ffnen</button>`);
+  $('#mBack').onclick = sheetMail;
+  $('#mTask').onclick = ()=>{
+    S.tasks.push({id:'x'+Date.now(), title:m.sub, d:todayISO(), done:false});
+    closeSheet(); render(); toast('Als Aufgabe gemerkt');
+  };
+  $('#mOpen').onclick = ()=>{ closeSheet(); render(); toast('\u00d6ffnet Gmail'); };
 }
 
 function sheetWeather(){
@@ -1065,7 +1074,6 @@ setInterval(()=>{
     const b=document.querySelector('.player .pbar i'); if(b) b.style.width=(S.music.pos/S.music.len*100)+'%';
     const mp=$('#mPos'); if(mp) mp.textContent=mmss(S.music.pos);
   }
-  const bc=$('#bChat'); if(bc) bc.classList.toggle('live', S.chatUnread>0);
   if(S.ctx==='live') $('#sbTime').textContent = fmtClock();
 },1000);
 
@@ -1086,7 +1094,7 @@ window.addEventListener('resize',fit);
 const KEY='blick.v1';
 function save(){
   try{ localStorage.setItem(KEY, JSON.stringify({
-    tasks:S.tasks, notes:S.notes, events:S.events, theme:S.theme, mailRead:S.mailRead
+    tasks:S.tasks, notes:S.notes, events:S.events, theme:S.theme
   })); }catch(e){}
 }
 function load(){
@@ -1096,7 +1104,6 @@ function load(){
     if(d.tasks) S.tasks=d.tasks;
     if(d.notes) S.notes=d.notes;
     if(d.events) S.events=d.events;
-    if(typeof d.mailRead==='boolean') S.mailRead=d.mailRead;
     if(d.theme==='dark'){
       S.theme='dark';
       document.getElementById('screen').classList.add('dark');
